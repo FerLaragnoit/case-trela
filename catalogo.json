@@ -1,0 +1,371 @@
+[
+  {
+    "nome": "Frango apimentado com broto de feijão",
+    "preco": 45.0,
+    "descricao": "Peito de frango grelhado servido com broto de feijão e molho picante.",
+    "tags": [
+      "picante"
+    ]
+  },
+  {
+    "nome": "Camarão ao curry apimentado",
+    "preco": 52.5,
+    "descricao": "Camarões salteados em molho curry picante com leite de coco sem lactose.",
+    "tags": [
+      "picante",
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Carne de panela apimentada",
+    "preco": 49.9,
+    "descricao": "Carne bovina cozida lentamente com pimenta dedo-de-moça e especiarias.",
+    "tags": [
+      "picante"
+    ]
+  },
+  {
+    "nome": "Tofu apimentado com mix de legumes",
+    "preco": 38.0,
+    "descricao": "Cubos de tofu grelhado com mix de legumes e pimenta caiena.",
+    "tags": [
+      "picante",
+      "vegano",
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Strogonoff de frango sem lactose",
+    "preco": 53.0,
+    "descricao": "Frango desfiado ao molho cremoso sem lactose.",
+    "tags": [
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Salmão grelhado",
+    "preco": 58.0,
+    "descricao": "Filé de salmão grelhado com molho de ervas finas.",
+    "tags": []
+  },
+  {
+    "nome": "Peito de frango grelhado com legumes no vapor",
+    "preco": 42.0,
+    "descricao": "Peito de frango grelhado servido com legumes levemente temperados.",
+    "tags": [
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Quinoa com grão-de-bico e legumes",
+    "preco": 35.0,
+    "descricao": "Salada quente de quinoa, grão-de-bico, pimentões e cenoura.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Salada de lentilha com tahine",
+    "preco": 32.0,
+    "descricao": "Lentilhas, tomate, pepino e molho de tahine.",
+    "tags": [
+      "vegano",
+      "sem gluten"
+    ]
+  },
+  {
+    "nome": "Escondidinho de batata doce com carne",
+    "preco": 48.0,
+    "descricao": "Purê de batata doce e carne moída temperada.",
+    "tags": []
+  },
+  {
+    "nome": "Escondidinho de mandioquinha vegano",
+    "preco": 39.5,
+    "descricao": "Purê de mandioquinha e proteína de soja.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Tacos de jaca desfiada",
+    "preco": 37.0,
+    "descricao": "Tortillas recheadas com jaca temperada e molho apimentado.",
+    "tags": [
+      "vegano",
+      "picante"
+    ]
+  },
+  {
+    "nome": "Lasanha de berinjela sem lactose",
+    "preco": 55.0,
+    "descricao": "Camadas de berinjela com molho de tomate e queijo vegano.",
+    "tags": [
+      "vegano",
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Omelete de claras com espinafre",
+    "preco": 30.0,
+    "descricao": "Omelete feito com claras, espinafre e tomate cereja.",
+    "tags": []
+  },
+  {
+    "nome": "Panqueca de banana sem açúcar",
+    "preco": 27.0,
+    "descricao": "Panqueca de banana e aveia sem adição de açúcar.",
+    "tags": [
+      "sem açucar",
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Arroz carreteiro",
+    "preco": 50.0,
+    "descricao": "Arroz tradicional misturado a carne desfiada e temperos.",
+    "tags": []
+  },
+  {
+    "nome": "Risoto de cogumelos",
+    "preco": 45.0,
+    "descricao": "Risoto cremoso de arroz arbóreo com cogumelos variados.",
+    "tags": []
+  },
+  {
+    "nome": "Peito de peru ao molho light",
+    "preco": 54.0,
+    "descricao": "Peito de peru assado com ervas finas.",
+    "tags": []
+  },
+  {
+    "nome": "Escondidinho de frango com batata doce",
+    "preco": 51.0,
+    "descricao": "Purê de batata doce e frango desfiado.",
+    "tags": []
+  },
+  {
+    "nome": "Tabule com falafel",
+    "preco": 41.0,
+    "descricao": "Salada de trigo para quibe, tomate, salsa e bolinhos de falafel.",
+    "tags": [
+      "vegano",
+      "sem lactose",
+      "sem gluten"
+    ]
+  },
+  {
+    "nome": "Salada Caesar sem lactose",
+    "preco": 34.0,
+    "descricao": "Alface, frango grelhado, croutons e molho Caesar sem lactose.",
+    "tags": [
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Yakissoba de legumes",
+    "preco": 38.0,
+    "descricao": "Macarrão oriental com mix de legumes e tofu.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Espaguete de abobrinha ao pesto",
+    "preco": 36.0,
+    "descricao": "Tiras de abobrinha com molho pesto e nozes.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Berinjela recheada com carne",
+    "preco": 46.0,
+    "descricao": "Meia berinjela recheada com carne moída e queijo.",
+    "tags": []
+  },
+  {
+    "nome": "Filé de peixe ao molho de limão",
+    "preco": 59.0,
+    "descricao": "Filé de peixe branco com molho cítrico.",
+    "tags": []
+  },
+  {
+    "nome": "Bowl de açaí sem açúcar",
+    "preco": 28.0,
+    "descricao": "Açaí puro com frutas e granola sem adição de açúcar.",
+    "tags": [
+      "sem açucar",
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Wrap de frango com abacate",
+    "preco": 48.0,
+    "descricao": "Tortilla recheada com frango, abacate e alface.",
+    "tags": []
+  },
+  {
+    "nome": "Panqueca proteica",
+    "preco": 33.0,
+    "descricao": "Panqueca de whey com aveia, sem açúcar.",
+    "tags": [
+      "sem açucar"
+    ]
+  },
+  {
+    "nome": "Salada de grão-de-bico com atum",
+    "preco": 44.0,
+    "descricao": "Grão-de-bico, atum, cebola roxa e ervas.",
+    "tags": []
+  },
+  {
+    "nome": "Tofu ao molho agridoce",
+    "preco": 40.0,
+    "descricao": "Cubos de tofu com molho agridoce e gergelim.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Frango xadrez sem glúten",
+    "preco": 47.0,
+    "descricao": "Frango salteado com pimentões e castanhas.",
+    "tags": [
+      "picante",
+      "sem gluten"
+    ]
+  },
+  {
+    "nome": "Carne de sol com mandioca",
+    "preco": 53.0,
+    "descricao": "Carne de sol desfiada com mandioca cozida.",
+    "tags": []
+  },
+  {
+    "nome": "Espetinho de frango com legumes",
+    "preco": 42.0,
+    "descricao": "Espetinho grelhado de frango, pimentão e cebola.",
+    "tags": [
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Berinjela à parmegiana vegana",
+    "preco": 39.0,
+    "descricao": "Berinjela empanada com queijo vegano.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Peito de frango ao molho de laranja",
+    "preco": 49.0,
+    "descricao": "Frango grelhado com molho cítrico e gergelim.",
+    "tags": []
+  },
+  {
+    "nome": "Salada de rúcula com pera e nozes",
+    "preco": 34.0,
+    "descricao": "Rúcula, fatias de pera, nozes e vinagrete.",
+    "tags": []
+  },
+  {
+    "nome": "Cuscuz paulista vegetariano",
+    "preco": 32.0,
+    "descricao": "Cuscuz com legumes e ovos pochê.",
+    "tags": []
+  },
+  {
+    "nome": "Purê de batata doce com carne seca",
+    "preco": 50.0,
+    "descricao": "Purê cremoso de batata doce e carne seca.",
+    "tags": []
+  },
+  {
+    "nome": "Bowl de poke de salmão",
+    "preco": 55.0,
+    "descricao": "Salmão cru, arroz japonês, vegetais e molho shoyu.",
+    "tags": []
+  },
+  {
+    "nome": "Bife à rolê",
+    "preco": 54.0,
+    "descricao": "Bife enrolado com bacon e legumes.",
+    "tags": []
+  },
+  {
+    "nome": "Panini vegano de legumes",
+    "preco": 38.0,
+    "descricao": "Pão integral recheado com mix de legumes grelhados.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Salada de grãos mediterrânea",
+    "preco": 37.0,
+    "descricao": "Mix de grãos, tomate seco, azeitonas e ervas.",
+    "tags": []
+  },
+  {
+    "nome": "Frango ao molho mostarda",
+    "preco": 52.0,
+    "descricao": "Peito de frango com molho de mostarda e mel.",
+    "tags": [
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Carne de panela com batatas",
+    "preco": 56.0,
+    "descricao": "Carne cozida lentamente com batatas e cenoura.",
+    "tags": []
+  },
+  {
+    "nome": "Lasanha de espinafre sem lactose",
+    "preco": 54.0,
+    "descricao": "Lasanha de espinafre com molho branco vegano.",
+    "tags": [
+      "vegano",
+      "sem lactose"
+    ]
+  },
+  {
+    "nome": "Arroz de forno light",
+    "preco": 40.0,
+    "descricao": "Arroz integral com legumes assados e queijo vegano.",
+    "tags": [
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Marmita fitness de frango e brócolis",
+    "preco": 53.0,
+    "descricao": "Peito de frango, brócolis e arroz integral.",
+    "tags": []
+  },
+  {
+    "nome": "Bife acebolado sem glúten",
+    "preco": 51.0,
+    "descricao": "Bife grelhado com cebolas caramelizadas.",
+    "tags": [
+      "sem gluten"
+    ]
+  },
+  {
+    "nome": "Salada de frutas sem açúcar",
+    "preco": 29.0,
+    "descricao": "Mix de frutas da estação sem adição de açúcar.",
+    "tags": [
+      "sem açucar",
+      "vegano"
+    ]
+  },
+  {
+    "nome": "Purê de abóbora com carne moída",
+    "preco": 45.0,
+    "descricao": "Purê de abóbora temperado com carne moída.",
+    "tags": []
+  }
+]
