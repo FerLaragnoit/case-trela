@@ -1,6 +1,5 @@
 import json
-
-catalogo_path = 'catalogo.json'
+import os
 
 def extrai_tags(arquivo_json):
     """
@@ -20,5 +19,10 @@ def extrai_tags(arquivo_json):
 
     return tags_unicas
 
-tags_unicas = extrai_tags(catalogo_path)
+# Para compatibilidade, carrega as tags se executado diretamente
+if __name__ == "__main__":
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    catalogo_path = os.path.join(current_dir, '..', '..', 'catalogo.json')
+    tags_unicas = extrai_tags(catalogo_path)
+    print(f"Tags encontradas: {sorted(list(tags_unicas))}")
 

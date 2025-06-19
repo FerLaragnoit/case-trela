@@ -4,6 +4,7 @@ from openai import OpenAI
 from typing import Dict, List, Optional
 
 from .tools.procura_catalogo import search_catalog, get_cheapest_item, get_most_expensive_item, get_price_range
+from .tools.extrai_filtro import extrai_tags
 
 class MealRecommendationAgent:
     """
@@ -24,6 +25,14 @@ class MealRecommendationAgent:
         self.client = OpenAI(api_key=self.api_key)
         self.model = "gpt-4o"
         
+        # Carrega as tags únicas do catálogo
+        try:
+            catalogo_path = os.path.join(os.path.dirname(__file__), '..', 'catalogo.json')
+            self.tags_disponiveis = list(extrai_tags(catalogo_path))
+        except Exception as e:
+            print(f"Aviso: Não foi possível carregar tags do catálogo: {e}")
+            self.tags_disponiveis = []
+        
         self.response_schema = {
             "type": "json_schema",
             "json_schema": {
@@ -36,8 +45,7 @@ class MealRecommendationAgent:
                             "type": "string",
                             "enum": ["search_catalog", "get_cheapest_item", "get_most_expensive_item", "get_price_range"],
                             "description": "Ação que será executada baseada na solicitação do usuário"
-                        },
-                        "search_params": {
+                        },                        "search_params": {
                             "type": "object",
                             "properties": {
                                 "budget": {"type": ["number", "null"]},
@@ -54,6 +62,7 @@ class MealRecommendationAgent:
                                     "items": {"type": "string"}
                                 }
                             },
+                            "required": ["budget", "incluir_tags", "excluir_tags", "ingredientes_obrigatorios"],
                             "additionalProperties": False
                         },
                         "reasoning": {
@@ -65,58 +74,47 @@ class MealRecommendationAgent:
                             "description": "Interpretação da intenção do usuário"
                         }
                     },
-                    "required": ["action_taken", "reasoning", "user_intent"],
+                    "required": ["action_taken", "search_params", "reasoning", "user_intent"],
                     "additionalProperties": False
-                }
-            }
-        }
+                }            }        }
         
-        self.system_prompt = """
-Você é um assistente especializado em recomendação de refeições. Sua resposta deve seguir EXATAMENTE o schema JSON fornecido.
+        self.system_prompt = f"""
+Assistente de recomendação de refeições. Responda EXATAMENTE no formato JSON.
 
-ANÁLISE E DECISÃO:
-1. Analise a solicitação do usuário
-2. Determine qual ação tomar baseada nas regras
-3. Prepare os parâmetros necessários (se aplicável)
-4. Forneça uma explicação clara
+TAGS DISPONÍVEIS: {', '.join(self.tags_disponiveis)}
 
-MAPEAMENTO DE AÇÕES:
-- "mais barato", "econômico", "menor preço", "mais em conta" → action_taken: "get_cheapest_item"
-- "mais caro", "premium", "maior preço" → action_taken: "get_most_expensive_item"  
-- "faixa de preço", "preços disponíveis" → action_taken: "get_price_range"
-- Qualquer outra busca por comida → action_taken: "search_catalog"
+AÇÕES:
+- "mais barato" → "get_cheapest_item"
+- "mais caro" → "get_most_expensive_item"  
+- "faixa de preço" → "get_price_range"
+- Qualquer busca → "search_catalog"
 
-TAGS DISPONÍVEIS (use exatamente):
-- "vegano", "sem lactose", "picante", "sem gluten", "sem açucar"
+MAPEAMENTO TAGS:
+- "sem lactose" → ["sem lactose"]
+- "vegano" → ["vegano"]
+- "picante/apimentado" → ["picante"]
+- "sem gluten" → ["sem gluten"]
+- "sem açúcar" → ["sem açucar"]
 
-INTERPRETAÇÃO INTELIGENTE:
-- "proteína" → ingredientes_obrigatorios: ["frango", "carne", "peixe", "ovo", "tofu", "camarão"]
-- "arroz" → ingredientes_obrigatorios: ["arroz"]
-- "legumes" → ingredientes_obrigatorios: ["legumes", "brócolis", "cenoura"]
-- "saudável" → IGNORE (todos os pratos são saudáveis)
-- "apimentado"/"picante" → incluir_tags: ["picante"]
+INGREDIENTES:
+- "proteína" → ["frango", "carne", "peixe", "ovo", "tofu", "camarão"]
+- "arroz" → ["arroz"]
+- "legumes" → ["legumes", "brócolis", "cenoura"]
 
-EXEMPLOS DE RESPOSTA:
-1. "Quero o prato mais barato" →
-   {
-     "action_taken": "get_cheapest_item",
-     "reasoning": "Usuário pediu especificamente pelo prato mais barato",
-     "user_intent": "Encontrar a opção mais econômica do cardápio"
-   }
+FORMATO:
+{{
+  "action_taken": "search_catalog",
+  "search_params": {{
+    "budget": null,
+    "incluir_tags": [],
+    "excluir_tags": [],
+    "ingredientes_obrigatorios": []
+  }},
+  "reasoning": "explicação breve",
+  "user_intent": "intenção do usuário"
+}}
 
-2. "Prato vegano com proteína até R$40" →
-   {
-     "action_taken": "search_catalog",
-     "search_params": {
-       "budget": 40,
-       "incluir_tags": ["vegano"],
-       "ingredientes_obrigatorios": ["frango", "carne", "peixe", "ovo", "tofu", "camarão"]
-     },
-     "reasoning": "Busca por prato vegano com proteína dentro do orçamento especificado",
-     "user_intent": "Encontrar refeição vegana com fonte de proteína respeitando limite de preço"
-   }
-
-IMPORTANTE: Sempre preencha action_taken, reasoning e user_intent. Use search_params apenas para search_catalog.
+IMPORTANTE: SEMPRE inclua search_params com TODOS os campos, mesmo vazios.
 """
 
     def _execute_function(self, function_name: str, arguments: dict):
@@ -209,6 +207,71 @@ IMPORTANTE: Sempre preencha action_taken, reasoning e user_intent. Use search_pa
         
         return relaxed
 
+    def _map_user_text_to_tags(self, user_text: str) -> List[str]:
+        """
+        Mapeia o texto do usuário para as tags disponíveis no catálogo
+        
+        Args:
+            user_text (str): Texto do usuário
+            
+        Returns:
+            List[str]: Lista de tags encontradas
+        """
+        user_text_lower = user_text.lower()
+        tags_encontradas = []
+        
+        # Mapeamento de termos comuns para tags
+        mapeamentos = {
+            'sem lactose': ['sem lactose'],
+            'intolerante a lactose': ['sem lactose'],
+            'lactose': ['sem lactose'],
+            'vegano': ['vegano'],
+            'vegan': ['vegano'],
+            'apimentado': ['picante'],
+            'picante': ['picante'],
+            'sem gluten': ['sem gluten'],
+            'sem açucar': ['sem açucar'],
+            'sem açúcar': ['sem açucar'],
+        }
+        
+        # Busca por mapeamentos diretos
+        for termo, tags in mapeamentos.items():
+            if termo in user_text_lower:
+                for tag in tags:
+                    if tag in self.tags_disponiveis:
+                        tags_encontradas.append(tag)
+        
+        # Busca direta nas tags disponíveis
+        for tag in self.tags_disponiveis:
+            if tag.lower() in user_text_lower:
+                tags_encontradas.append(tag)
+        
+        return list(set(tags_encontradas))  # Remove duplicatas
+
+    def _optimize_search_params(self, user_text: str, search_params: dict) -> dict:
+        """
+        Otimiza os parâmetros de busca usando as tags reais do catálogo
+        
+        Args:
+            user_text (str): Texto original do usuário
+            search_params (dict): Parâmetros originais
+            
+        Returns:
+            dict: Parâmetros otimizados
+        """
+        optimized_params = search_params.copy()
+        
+        # Mapeia o texto do usuário para tags reais
+        tags_encontradas = self._map_user_text_to_tags(user_text)
+        
+        # Se encontrou tags específicas, use-as
+        if tags_encontradas:
+            current_tags = set(optimized_params.get('incluir_tags', []))
+            current_tags.update(tags_encontradas)
+            optimized_params['incluir_tags'] = list(current_tags)
+        
+        return optimized_params
+
     def chat(self, user_message: str) -> str:
         """
         Processa uma mensagem do usuário usando Responses API
@@ -235,15 +298,16 @@ IMPORTANTE: Sempre preencha action_taken, reasoning e user_intent. Use search_pa
                 else:
                     decision_json = json.loads(str(response_content))
             except (json.JSONDecodeError, AttributeError) as e:
-                return f"Erro ao processar resposta estruturada: {str(e)}. Tente novamente!"
-            
+                return f"Erro ao processar resposta estruturada: {str(e)}. Tente novamente!"            
             action = decision_json["action_taken"]
             reasoning = decision_json["reasoning"]
             user_intent = decision_json["user_intent"]
             
             if action == "search_catalog":
                 search_params = decision_json.get("search_params", {})
-                clean_params = {k: v for k, v in search_params.items() if v is not None and v != []}
+                # Otimiza os parâmetros usando as tags reais do catálogo
+                optimized_params = self._optimize_search_params(user_message, search_params)
+                clean_params = {k: v for k, v in optimized_params.items() if v is not None and v != []}
                 function_result = self._execute_function(action, clean_params)
                 
                 if function_result.get("count", 0) == 0 and clean_params:
